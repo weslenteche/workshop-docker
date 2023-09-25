@@ -1,0 +1,34 @@
+version: '3.7'
+
+services:
+  api:
+    build: .
+    container_name: product.api
+    environment:
+      - PORT=8000
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=products_db
+      - DB_USER=productuser
+      - DB_PASSWORD=pr0ductp@ssw0rd
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: product.db
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=products_db
+      - MYSQL_USER=productuser
+      - MYSQL_PASSWORD=pr0ductp@ssw0rd
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+      - product-db-data:/var/lib/mysql
+    ports:
+      - "33306:3306"
+
+volumes:
+  product-db-data:
+    name: product-db-data
