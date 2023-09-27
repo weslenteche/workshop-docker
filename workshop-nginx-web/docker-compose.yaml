@@ -1,24 +1,30 @@
 version: '3.7'
 
 services:
-  web:
+  # O exemplo abaixo, mostra a criação de um container docker com servidor Web NGINX expondo 
+  # a porta 8080 a maquina Host(hospedeiro)
+  web1:
     image: nginx:1.25-alpine
-    container_name: workshop.web
+    container_name: workshop.web1
     ports:
       - "8080:80"
 
-  # web:
-  #   image: nginx:1.25-alpine
-  #   container_name: workshop.web
-  #   ports:
-  #     - "8080:80"
-  #   volumes:
-  #     - ./web:/usr/share/nginx/html
+  # O exemplo abaixo, mostra a criação de um container docker com servidor Web NGINX expondo 
+  # a porta 8081 a maquina Host(hospedeiro) utilizando-se do mapeamento de volume
+  web2:
+    image: nginx:1.25-alpine
+    container_name: workshop.web2
+    ports:
+      - "8081:80"
+    volumes:
+      - ./web:/usr/share/nginx/html
 
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: workshop.web
-  #   ports:
-  #     - "8080:80"
+  # O exemplo abaixo, mostra a criação de um container docker com servidor Web NGINX expondo 
+  # a porta 8082 a maquina Host(hospedeiro) utilizando-se a criação da imagem usando o Dockerfile
+  web3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: workshop.web3
+    ports:
+      - "8082:80"

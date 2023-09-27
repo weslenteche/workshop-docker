@@ -2,22 +2,24 @@ version: '3.7'
 
 services:
   api:
-    build: .
-    container_name: product.api
+    build: . # constroi a imagem a partir de um arquivo Dockerfile no qual esteja no mesmo diretorio do docker-compose.yaml
+    container_name: product.api # define o nome do container, similar a docker run --name
+    restart: always
     environment:
-      - PORT=8000
+      - PORT=8000 #define uma variável de ambiente chamada PORT com valor 8000, assim para os demais valores
       - DB_HOST=db
       - DB_PORT=3306
       - DB_DATABASE=products_db
       - DB_USER=productuser
       - DB_PASSWORD=pr0ductp@ssw0rd
-    depends_on:
+    ports:
+      - "8000:8000"
+    depends_on: #depends_on significa que o container só ira executar caso o container no serviço (db) esteja em execução
       - db
 
   db:
     image: mysql:8.0
     container_name: product.db
-    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=products_db

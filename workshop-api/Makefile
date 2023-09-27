@@ -1,2 +1,5 @@
+up:
+	docker-compose up -d
+
 build:
-	docker build -t weslenteche/workshop-api:latest .
+	docker build -t yourname/workshop-api:latest .
